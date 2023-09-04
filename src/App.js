@@ -1,18 +1,21 @@
-import React from 'react'
-import { Switch, Route } from 'react-router-dom'
-import './App.css'
-import ListPage from './pages/ListPage/index'
-import ViewPage from './pages/ViewPage/index'
+import React, { lazy, Suspense } from 'react';
+import { Switch, Route } from 'react-router-dom';
+import './App.css';
+
+const ListPage = lazy(() => import('./pages/ListPage/'));
+const ViewPage = lazy(() => import('./pages/ViewPage'));
 
 function App() {
   return (
     <div className="App">
       <Switch>
-        <Route path="/" component={ListPage} exact />
-        <Route path="/view/:id" component={ViewPage} exact />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Route path="/" component={ListPage} exact />
+          <Route path="/view/:id" component={ViewPage} exact />
+        </Suspense>
       </Switch>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
